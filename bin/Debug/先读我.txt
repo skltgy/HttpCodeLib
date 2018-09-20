@@ -1,0 +1,35 @@
+/* 注意,这个是个测试版.只是为了测试性能所开放的测试版!!!!!!!!!!!!!!!!
+优化了资源占用等小问题.
+
+
+
+
+
+
+
+
+
+
+
+
+ * 主版本号:v4.5
+ * 次版本号:18.01.10(更新日期)
+ * 当前版本:v4.5.18.01.10
+ * 玄机网C# 基类库 Http请求类
+ * 基础功能1:基于HttpWebRequest方式 同步/异步 提交数据 包含(Get/Post)
+ * 基础功能2:基于Wininet系统API方式提交数据 包含(Get/Post)
+ * 基础功能3:集合常用处理方法.处理页面结果/HTML数据更快捷
+ * 
+ * Coding by 君临
+ * 07-12/2014
+ * 
+ * 使用HttpCode时,请先引用 System.Web 
+ * 如需使用系统自带的Json转换类库,则需要引用  System.Web.Extensions( Framework 2.0不需要 )   具体方法请参考下文链接 与注释
+ * http://bbs.msdn5.com/thread-11-1-1.html 
+ * 
+ * 解决 Deflate压缩后的编码识别乱码的问题
+ * 移除ClearCookie 中Again标签的失误
+ * 重写HttpItems.Header属性(如果填写HeaderStr自动返回格式化后的头数据)
+ * 增加HttpItems.UserAgentTypeEx属性.(发送时UserAgent携带的内容属性.默认为PC 数据可选类型:PC/手机(安卓5.1.1)/WeChat)
+ * 优化核心资源占用,暂无做大批量数据测试, testing
+*/
