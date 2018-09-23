@@ -683,7 +683,7 @@ namespace HttpCodeLib
         private void SetPostData(HttpItems objHttpItems)
         {
             //验证在得到结果时是否有传入数据
-            if (request.Method.Trim().ToLower() == "post")
+            if (Regex.IsMatch(request.Method.Trim().ToLower(), "post|delete|put"))
             {
                 //写入Byte类型
                 if (objHttpItems.PostDataType == PostDataType.Byte)
