@@ -717,79 +717,42 @@ namespace HttpCodeLib
                 }
             }
         }
-        /// <summary>
-        /// 如果填写字符串信息,则设置字符串代理
-        /// </summary>
-        /// <param name="objHttpItems"></param>
-        void setProStr(HttpItems objHttpItems)
-        {
-            if (!string.IsNullOrEmpty(objHttpItems.ProxyIp))
-            {
-                WebProxy myProxy;
-                //设置代理服务器
-                if (objHttpItems.ProxyIp.Contains(":"))
-                {
-                    string[] plist = objHttpItems.ProxyIp.Split(':');
-                    myProxy = new WebProxy(plist[0].Trim(), Convert.ToInt32(plist[1].Trim()));
-                }
-                else
-                {
-                    myProxy = new WebProxy(objHttpItems.ProxyIp, false);
-                }
-                if (!string.IsNullOrEmpty(objHttpItems.ProxyUserName) && !string.IsNullOrEmpty(objHttpItems.ProxyPwd))
-                {
-                    myProxy.Credentials = new NetworkCredential(objHttpItems.ProxyUserName, objHttpItems.ProxyPwd);
-                }
-                request.Proxy = myProxy;
-                //设置安全凭证
-                request.Credentials = CredentialCache.DefaultNetworkCredentials;
-            }
-        }
+        
         /// <summary>
         /// 设置代理
         /// </summary>
         /// <param name="objHttpItems">参数对象</param>
         private void SetProxy(HttpItems objHttpItems)
         {
-            switch (objHttpItems.proxyType)
+            //ProxyType.LocalProxy时不进行任何操作
+            if (objHttpItems.proxyType == ProxyType.NULL)
             {
-                case ProxyType.LocalProxy:
-                    request.Proxy = new WebProxy();
-                    break;
-                case ProxyType.NULL:
+                if (!string.IsNullOrEmpty(objHttpItems.ProxyIp))
+                {
+                    WebProxy myProxy;
+                    //设置代理服务器
+                    if (objHttpItems.ProxyIp.Contains(":"))
+                    {
+                        string[] plist = objHttpItems.ProxyIp.Split(':');
+                        myProxy = new WebProxy(plist[0].Trim(), Convert.ToInt32(plist[1].Trim()));
+                    }
+                    else
+                    {
+                        myProxy = new WebProxy(objHttpItems.ProxyIp, false);
+                    }
+                    if (!string.IsNullOrEmpty(objHttpItems.ProxyUserName) && !string.IsNullOrEmpty(objHttpItems.ProxyPwd))
+                    {
+                        myProxy.Credentials = new NetworkCredential(objHttpItems.ProxyUserName, objHttpItems.ProxyPwd);
+                    }
+                    request.Proxy = myProxy;
+                    //设置安全凭证
+                    request.Credentials = CredentialCache.DefaultNetworkCredentials;
+                }
+                else
+                {
                     request.Proxy = null;
-                    break; 
+                }
             }
-            setProStr(objHttpItems);
-            #region 原始代理代码
-            //if (!string.IsNullOrEmpty(objHttpItems.ProxyIp))
-            //{
-            //    WebProxy myProxy;
-            //    //设置代理服务器
-            //    if (objHttpItems.ProxyIp.Contains(":"))
-            //    {
-            //        string[] plist = objHttpItems.ProxyIp.Split(':');
-            //        myProxy = new WebProxy(plist[0].Trim(), Convert.ToInt32(plist[1].Trim()));
-            //    }
-            //    else
-            //    {
-            //        myProxy = new WebProxy(objHttpItems.ProxyIp, false);
-            //    }
-            //    if (!string.IsNullOrEmpty(objHttpItems.ProxyUserName) && !string.IsNullOrEmpty(objHttpItems.ProxyPwd))
-            //    {
-            //        myProxy.Credentials = new NetworkCredential(objHttpItems.ProxyUserName, objHttpItems.ProxyPwd);
-            //    }
-            //    request.Proxy = myProxy;
-            //    //设置安全凭证
-            //    request.Credentials = CredentialCache.DefaultNetworkCredentials;
-            //}
-            //else
-            //{
-            //    request.Proxy = null;
-
-            //} 
-            #endregion
-
         }
         /// <summary>
         /// 回调验证证书问题
